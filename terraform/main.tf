@@ -37,6 +37,7 @@ resource "aws_s3_bucket_public_access_block" "static_site_access" {
 # }
 
 resource "aws_acm_certificate" "ehsanshekari_cert" {
+  provider = aws.us-east-1
   domain_name       = "ehsanshekari.com"
   validation_method = "DNS"
 
@@ -73,8 +74,11 @@ resource "aws_route53_record" "ehsanshekari_cert_validation" {
 }
 
 resource "aws_acm_certificate_validation" "ehsanshekari_cert_validation" {
+  provider = aws.us-east-1
   certificate_arn         = aws_acm_certificate.ehsanshekari_cert.arn
   validation_record_fqdns = [for record in aws_route53_record.ehsanshekari_cert_validation : record.fqdn]
+
+  depends_on = [ aws_route53_record.ehsanshekari_cert_validation ]
 }
 
 resource "aws_cloudfront_origin_access_control" "oac" {
