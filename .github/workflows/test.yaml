@@ -49,7 +49,7 @@ jobs:
         run: |
           aws s3 cp index.html s3://${{ secrets.BUCKET_NAME }}/index.html
           aws s3 cp --recursive images/ s3://${{ secrets.BUCKET_NAME }}/images/
-          aws s3 cp --recursive style/ s3://${{ secrets.BUCKET_NAME }}/style/
+          aws s3 cp --recursive styles/ s3://${{ secrets.BUCKET_NAME }}/styles/
       
       
       
